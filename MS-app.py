@@ -255,6 +255,6 @@ with right:
 
     ax.set_xlabel("Position (nm)", fontsize=14)
     ax.set_ylabel("Energy (eV)", fontsize=14)
-    ax.legend(fontsize=10)
+    ax.legend(fontsize=10, loc="upper right", frameon=True)
 
     st.pyplot(fig)
