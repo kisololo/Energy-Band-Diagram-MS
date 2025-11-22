@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
-plt.rcParams["figure.figsize"] = (11, 7)
+plt.rcParams["figure.figsize"] = (8, 5)
 plt.rcParams["axes.linewidth"] = 1.8
-plt.rcParams["font.size"] = 16
+plt.rcParams["font.size"] = 12
 plt.rcParams["lines.linewidth"] = 2.4
 
 # ---------------------------------------------------------------------
@@ -104,51 +104,99 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 
 
 # ---------------------------------------------------------------------
-# STREAMLIT UI
+# STREAMLIT UI — with TABS + FIXED Vapp Sync
 # ---------------------------------------------------------------------
 st.set_page_config(layout="wide")
+# st.title("Schottky Contact Energy Band Diagram")
+st.markdown("""
+    <style>
+        .block-container { padding-top: 1.2rem; }
+    </style>
+""", unsafe_allow_html=True)
 
-st.title("Schottky Contact Energy Band Diagram")
+st.markdown(
+    "<h1 style='font-size:32px; font-weight:600; font-family:Arial;'>"
+    "Schottky Contact Energy Band Diagram"
+    "</h1>",
+    unsafe_allow_html=True
+)
 
-# Create two wide columns
+
 left, right = st.columns([1, 2])
 
+#  Initialize session state for Vapp
+if "Vapp" not in st.session_state:
+    st.session_state["Vapp"] = 0.0
+
+if "Vapp_slider" not in st.session_state:
+    st.session_state["Vapp_slider"] = 0.0
+
+# Sync functions
+def sync_from_box():
+    st.session_state["Vapp_slider"] = st.session_state["Vapp"]
+
+def sync_from_slider():
+    st.session_state["Vapp"] = st.session_state["Vapp_slider"]
+
+
 # ==============================
-# LEFT — All inputs
+# LEFT PANEL (TABS)
 # ==============================
 with left:
+    tabs = st.tabs(["Material", "Semiconductor", "Metal", "Bias", "Plot Range"])
 
-    st.subheader("Material Selection")
-    mat = st.selectbox("Semiconductor Material", list(materials.keys()))
-    metal = st.selectbox("Metal", list(metals.keys()))
+    # ---- Tab 1: Material ----
+    with tabs[0]:
+        mat = st.selectbox("Semiconductor Material", list(materials.keys()), index=list(materials.keys()).index("GaN"))
+        metal = st.selectbox("Metal", list(metals.keys()), index=list(metals.keys()).index("Ni"))
 
-    st.subheader("Parameters")
+    # ---- Tab 2: Semiconductor ----
+    with tabs[1]:
+        Eg = st.number_input("Bandgap Eg (eV)", value=materials[mat]["Eg"])
+        chi = st.number_input("Electron affinity χ (eV)", value=materials[mat]["chi"])
+        eps_r = st.number_input("Dielectric constant εr", value=materials[mat]["eps"])
+        Nc = st.number_input(
+            "Nc (cm⁻³)",
+            value=float(materials[mat]["Nc"]),
+            format="%.2e"
+        )
+        Nd_scaled = st.slider("Nd (×1e16 cm⁻³)", 0.1, 100.0, 1.0)
+        Nd = Nd_scaled * 1e16
 
-    Eg = st.number_input("Bandgap Eg (eV)", value=materials[mat]["Eg"])
-    chi = st.number_input("Electron affinity χ (eV)", value=materials[mat]["chi"])
-    eps_r = st.number_input("Dielectric constant εr", value=materials[mat]["eps"])
-    Nc = st.number_input("Nc (cm⁻³)", value=float(materials[mat]["Nc"]))
+    # ---- Tab 3: Metal ----
+    with tabs[2]:
+        phi_m = st.number_input("Metal work function Φm (eV)", value=metals[metal])
 
-    Nd_scaled = st.slider("Nd (×1e16 cm⁻³)", 0.1, 100.0, 1.0)
-    Nd = Nd_scaled * 1e16
+    # ---- Tab 4: Bias (Synced Inputs)----
+    with tabs[3]:
+        st.number_input(
+            "Enter Vapp (V)",
+            key="Vapp",
+            on_change=sync_from_box
+        )
 
-    phi_m = st.number_input("Metal work function Φm (eV)", value=metals[metal])
+        st.slider(
+            "Adjust Vapp",
+            -5.0,
+            5.0,
+            key="Vapp_slider",
+            on_change=sync_from_slider
+        )
 
-    st.subheader("Applied Bias (V)")
-    Vapp = st.number_input("Enter Vapp (V)", value=0.0)
-    Vapp_slider = st.slider("Adjust Vapp", -5.0, 5.0, float(Vapp))
-    Vapp = Vapp_slider  # slider takes priority
+        Vapp = st.session_state["Vapp"]
 
-    T = st.number_input("Temperature (K)", value=300.0)
+        T = st.number_input("Temperature (K)", value=300.0)
 
-    st.subheader("Plot Range")
-    xmin = st.number_input("Xmin (nm)", value=-200.0)
-    xmax = st.number_input("Xmax (nm)", value=1000.0)
-    ymin = st.number_input("Ymin (eV)", value=-12.0)
-    ymax = st.number_input("Ymax (eV)", value=1.0)
+    # ---- Tab 5: Plot Range ----
+    with tabs[4]:
+        xmin = st.number_input("Xmin (nm)", value=-200.0)
+        xmax = st.number_input("Xmax (nm)", value=1000.0)
+        ymin = st.number_input("Ymin (eV)", value=-12.0)
+        ymax = st.number_input("Ymax (eV)", value=1.0)
+
 
 # ==============================
-# RIGHT — Plot updates automatically
+# RIGHT PANEL — PLOT (Auto-updates)
 # ==============================
 with right:
 
@@ -159,25 +207,37 @@ with right:
 
     fig, ax = plt.subplots()
 
-    header = (
-        f"Material: {mat}   Eg={Eg:.2f} eV   χ={chi:.2f} eV   εr={eps_r:.1f}   Nc={Nc:.2e} cm⁻³\n"
-        f"Metal: {metal} (Φm={phi_m:.2f} eV)   φBn={phi_Bn:.2f} eV   "
-        f"φbi={phi_bi:.2f} eV   xN={xN:.1f} nm   Vapp={Vapp:.2f} V"
+    # --- Clean inline labels above the plot (no box) ---
+    # --- Clean labels ABOVE the plot using fig.text (outside axes) ---
+    # --- Clean, math-mode labels above the plot ---
+    fig.text(
+        0.5, 0.985,
+        rf"$\mathrm{{Material:}}\ {mat}\quad "
+        rf"E_g={Eg:.2f}\ \mathrm{{eV}}\quad "
+        rf"\chi={chi:.2f}\ \mathrm{{eV}}\quad "
+        rf"\varepsilon_r={eps_r:.1f}\quad "
+        rf"N_c={Nc:.2e}\ \mathrm{{cm}}^{{-3}}$",
+        ha="center", va="top", fontsize=11
     )
 
     fig.text(
-        0.5, 0.97, header,
-        fontsize=16, ha="center", va="top",
-        bbox=dict(facecolor=(1,1,1,0.75), edgecolor="none", pad=12)
+        0.5, 0.945,
+        rf"$\mathrm{{Metal:}}\ {metal}\ (\Phi_m={phi_m:.2f}\ \mathrm{{eV}})\quad "
+        rf"\phi_{{Bn}}={phi_Bn:.2f}\ \mathrm{{eV}}\quad "
+        rf"\phi_{{bi}}={phi_bi:.2f}\ \mathrm{{eV}}\quad "
+        rf"x_N={xN:.1f}\ \mathrm{{nm}}\quad "
+        rf"V_{{app}}={Vapp:.2f}\ \mathrm{{V}}$",
+        ha="center", va="top", fontsize=11
     )
+
+    # Vacuum level
+    ax.plot(x_full, E0_vac, "--", color="#9aa4b0", linewidth=1.8, label="E0 (vacuum)")
 
     # Metal
     ax.plot(x_m, Ef1, color="#4472c4", label="Ef metal")
-    ax.fill_between(x_m, Ef1+0.1, Ef1-0.1, color="#9bbad0", alpha=0.45)
+    ax.fill_between(x_m, Ef1 + 0.1, Ef1 - 0.1, color="#9bbad0", alpha=0.45)
     ax.fill_between(x_m, Ef1, ymin, color="#e3e9f2", alpha=0.55)
 
-    # Vacuum
-    ax.plot(x_full, E0_vac, "--", color="#9aa4b0", linewidth=1.8)
 
     # Semiconductor
     ax.plot(x_semi, Ec2, color="#b44e4e", label="Ec")
@@ -193,8 +253,8 @@ with right:
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    ax.set_xlabel("Position (nm)", fontsize=18)
-    ax.set_ylabel("Energy (eV)", fontsize=18)
-    ax.legend(fontsize=14)
+    ax.set_xlabel("Position (nm)", fontsize=14)
+    ax.set_ylabel("Energy (eV)", fontsize=14)
+    ax.legend(fontsize=10)
 
     st.pyplot(fig)
