@@ -298,7 +298,7 @@ footer = """
 
 <div class="footerbox">
 <b>Schottky Contact Energy Band Diagram Simulator</b><br>
-Developed by <b>Kai Fu</b>, University of Utah<br>
+Developed by Kai Fu, University of Utah<br>
 Version 1.0 (2025)<br><br>
 
 <a href="https://github.com/kisololo/Energy-Band-Diagram-MS" target="_blank">
