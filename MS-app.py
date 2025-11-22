@@ -276,3 +276,29 @@ with right:
     ax.legend(fontsize=10, loc="upper right", frameon=True)
 
     st.pyplot(fig)
+
+    # ------------------------------
+    # Footer (About + Citation)
+    # ------------------------------
+    st.markdown("""
+        <hr style="margin-top:40px; margin-bottom:10px;">
+
+        <div style='text-align:center; font-size:14px; color:gray;'>
+
+            <b>Schottky Contact Energy Band Diagram Simulator</b><br>
+            Developed by <b>Kai Fu</b>, University of Utah<br>
+            Version 1.0 (2025)<br>
+            Source code: 
+            <a href="https://github.com/kisololo/Energy-Band-Diagram-MS" target="_blank">
+                GitHub Repository
+            </a>
+            <br><br>
+
+            <b>Citation:</b><br>
+            If you use this app for teaching or research,<br>
+            please cite:<br>
+            <i>Kai Fu, "Interactive Schottky Contact Energy Band Diagram," 2025.</i>
+
+        </div>
+    """, unsafe_allow_html=True)
+
