@@ -2,6 +2,24 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ------------------------------
+# Google Analytics (GA4)
+# ------------------------------
+ga_id = "G-7SJTF762GX"  # Your GA4 Measurement ID
+
+ga_script = f"""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{ga_id}');
+</script>
+"""
+
+st.markdown(ga_script, unsafe_allow_html=True)
+
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
