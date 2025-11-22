@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ---------------------------------------------------------------------
-# GLOBAL PLOT STYLE (Nature-like)
+# GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
 plt.rcParams["figure.figsize"] = (11, 7)
@@ -106,7 +106,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 # ---------------------------------------------------------------------
 # STREAMLIT UI
 # ---------------------------------------------------------------------
-st.title("Schottky Contact Energy Band Diagram — Nature Edition")
+st.title("Schottky Contact Energy Band Diagram")
 
 # ───────────────────────────────────────────
 # Layout: Left parameters | Right plot
