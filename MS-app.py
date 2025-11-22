@@ -43,7 +43,7 @@ metals = {
 }
 
 # ---------------------------------------------------------------------
-# Physics Engine (copied exactly from your code)
+# Physics Engine
 # ---------------------------------------------------------------------
 def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax):
 
@@ -106,14 +106,18 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 # ---------------------------------------------------------------------
 # STREAMLIT UI
 # ---------------------------------------------------------------------
+st.set_page_config(layout="wide")
+
 st.title("Schottky Contact Energy Band Diagram")
 
-# ───────────────────────────────────────────
-# Layout: Left parameters | Right plot
-# ───────────────────────────────────────────
-col1, col2 = st.columns([1, 2])
+# Create two wide columns
+left, right = st.columns([1, 2])
 
-with col1:
+# ==============================
+# LEFT — All inputs
+# ==============================
+with left:
+
     st.subheader("Material Selection")
     mat = st.selectbox("Semiconductor Material", list(materials.keys()))
     metal = st.selectbox("Metal", list(metals.keys()))
@@ -130,7 +134,11 @@ with col1:
 
     phi_m = st.number_input("Metal work function Φm (eV)", value=metals[metal])
 
-    Vapp = st.slider("Applied Bias Vapp (V)", -5.0, 5.0, 0.0)
+    st.subheader("Applied Bias (V)")
+    Vapp = st.number_input("Enter Vapp (V)", value=0.0)
+    Vapp_slider = st.slider("Adjust Vapp", -5.0, 5.0, float(Vapp))
+    Vapp = Vapp_slider  # slider takes priority
+
     T = st.number_input("Temperature (K)", value=300.0)
 
     st.subheader("Plot Range")
@@ -139,13 +147,10 @@ with col1:
     ymin = st.number_input("Ymin (eV)", value=-12.0)
     ymax = st.number_input("Ymax (eV)", value=1.0)
 
-# Button
-plot_button = st.button("Generate Band Diagram")
-
-# ───────────────────────────────────────────
-# PLOT
-# ───────────────────────────────────────────
-if plot_button:
+# ==============================
+# RIGHT — Plot updates automatically
+# ==============================
+with right:
 
     (x_m, x_semi, Ec1, Ef1, Ec2, Ev2, Ef2,
      E0, x_full, E0_vac, xN, phi_Bn, phi_bi) = compute_schottky(
@@ -166,7 +171,7 @@ if plot_button:
         bbox=dict(facecolor=(1,1,1,0.75), edgecolor="none", pad=12)
     )
 
-    # Metal states shading
+    # Metal
     ax.plot(x_m, Ef1, color="#4472c4", label="Ef metal")
     ax.fill_between(x_m, Ef1+0.1, Ef1-0.1, color="#9bbad0", alpha=0.45)
     ax.fill_between(x_m, Ef1, ymin, color="#e3e9f2", alpha=0.55)
