@@ -20,117 +20,6 @@ components.html("""
 </script>
 """, height=0, width=0)
 
-// ===============================================================
-// 1. DEBUG PANEL WRITER
-// ===============================================================
-function ga4_status(msg) {
-    const box = document.getElementById("ga4_status");
-    if (box) box.innerHTML = "GA4 DEBUG: " + msg;
-    console.log("[GA4 DEBUG]", msg);
-}
-
-
-// ===============================================================
-// 2. INITIALIZE DATALAYER
-// ===============================================================
-window.dataLayer = window.dataLayer || [];
-ga4_status("DataLayer initialized");
-
-
-// ===============================================================
-// 3. FAIL-SAFE LOAD (manual script loader)
-// ===============================================================
-(function(){
-    ga4_status("Loading gtag.js...");
-
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
-
-    script.onload = () => {
-        ga4_status("gtag.js LOADED");
-        console.log("[GA4] Script loaded");
-
-        // Initialize GA4
-        gtag('js', new Date());
-        gtag('config', 'G-7SJTF762GX', { debug_mode: true });
-
-        ga4_status("GA4 INIT COMPLETE");
-
-        // Fire test event
-        gtag('event', 'ga4_manual_test_event', {
-            message: "manual test event fired",
-            timestamp: new Date().toISOString()
-        });
-
-        ga4_status("Test event fired (check DebugView)");
-    };
-
-    script.onerror = () => {
-        ga4_status("ERROR: gtag.js FAILED TO LOAD");
-        console.error("[GA4] FAILED to load gtag.js");
-    };
-
-    document.head.appendChild(script);
-})();
-
-
-// ===============================================================
-// 4. DEFINE GTAG IN ADVANCE (to avoid race condition)
-// ===============================================================
-function gtag() {
-    window.dataLayer.push(arguments);
-    console.log("[GA4] gtag push:", arguments);
-}
-
-
-// ===============================================================
-// 5. NETWORK PROBE (detect blocked GA servers)
-// ===============================================================
-async function probeGA() {
-    ga4_status("Probing GA servers...");
-    try {
-        let resp = await fetch("https://www.google-analytics.com/g/collect", {
-            mode: "no-cors"
-        });
-        console.log("[GA4] Network probe OK", resp);
-        ga4_status("GA servers reachable");
-    } catch (e) {
-        console.warn("[GA4] Network probe BLOCKED", e);
-        ga4_status("GA servers BLOCKED");
-    }
-}
-probeGA();
-
-
-// ===============================================================
-// 6. PERIODIC SELF-TEST (every 5s)
-// ===============================================================
-let counter = 0;
-setInterval(() => {
-    counter++;
-    gtag('event', 'ga4_periodic_signal', { count: counter });
-    console.log("[GA4] periodic event", counter);
-}, 5000);
-
-
-// ===============================================================
-// 7. CONFIRM GLOBAL SCOPE
-// ===============================================================
-setTimeout(() => {
-    if (typeof gtag === "function") {
-        ga4_status("gtag() is ACTIVE");
-    } else {
-        ga4_status("ERROR: gtag() missing");
-    }
-}, 1500);
-
-
-</script>
-""", unsafe_allow_html=True)
-
-
-
 # ------------------------------
 # Google Analytics (GA4)
 # ------------------------------
@@ -490,6 +379,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
