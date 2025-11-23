@@ -1,0 +1,20 @@
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+
+<script>
+// Initialize GA4
+window.dataLayer = window.dataLayer || [];
+function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+
+// CRITICAL GA4 FIX: Injecting the parent URL into the config.
+// This tells GA4 to use the *parent* window's URL for its tracking context,
+// bypassing the 'about:srcdoc' issue and making the hit valid.
+gtag('config', 'G-7SJTF762GX', {
+    'cookie_domain': 'auto', // Important for cross-site cookie context
+    'page_location': window.parent.location.href, 
+    'debug_mode': true // Keep debug mode ON to verify in GA4 DebugView
+});
+
+// Report ready to Streamlit (This is essential for the component)
+window.parent.postMessage({ type: "streamlit:componentReady" }, "*");
+</script>
