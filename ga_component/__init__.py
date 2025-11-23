@@ -7,4 +7,5 @@ _component_func = components.declare_component(
 )
 
 def inject():
-    _component_func()
+    # Return a dummy value so Streamlit sees the component as “loaded”
+    return _component_func(default=1)
