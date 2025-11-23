@@ -17,6 +17,20 @@ components.html("""
 
   gtag('js', new Date());
   gtag('config', 'G-7SJTF762GX');
+  
+    // MANUAL PAGE VIEW (required for iframes)
+  gtag('event', 'page_view', {
+    page_title: document.title,
+    page_location: window.location.href,
+    page_path: window.location.pathname
+  });
+
+  // MANUAL TEST EVENT
+  gtag('event', 'test_event_from_iframe', {
+    status: "ok",
+    time: new Date().toISOString()
+  });
+
 
   // MANUAL PAGE VIEW (required for iframes)
   gtag('event', 'page_view', {
@@ -389,6 +403,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
