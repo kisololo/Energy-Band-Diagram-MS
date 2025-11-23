@@ -18,9 +18,10 @@ components.html("""
   // 1. Initial configuration and loading
   gtag('js', new Date());
 
-  // FIX: Force cookie_domain to auto to handle iframe cross-site context
+  // TEMPORARY FIX: Force debug_mode to ensure events show in GA4 DebugView
   gtag('config', 'G-7SJTF762GX', {
-      'cookie_domain': 'auto'
+      'cookie_domain': 'auto',
+      'debug_mode': true 
   });
 
   // 2. Wait for GA4 to load, then fire the page_view manually
@@ -304,7 +305,8 @@ with right:
             rf"$E_g={Eg:.2f}\,$eV   "
             rf"$\chi={chi:.2f}\,$eV   "
             rf"$\varepsilon_r={eps_r:.1f}$   "
-            rf"$N_c={Nc:.2e}\,\mathrm{{cm}}^{{-3}}$"
+            # rf"$N_c={Nc:.2e}\,\mathrm{{cm}}^{{-3}}$"
+            rf"$N_c={Nc:.2e}\,\text{{cm}}^{{-3}}$"  # Cleaner LaTeX for text inside math mode
         ),
         ha="center", va="top", fontsize=11, fontfamily="Arial"
     )
