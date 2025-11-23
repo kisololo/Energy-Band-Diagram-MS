@@ -7,6 +7,7 @@ import ga_component
 st.set_page_config(
     page_title="Schottky Band Diagram",
     page_icon="⚡",
+    layout="wide"
 )
 
 st.markdown("""
@@ -142,7 +143,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 # ---------------------------------------------------------------------
 # STREAMLIT UI — with TABS + FIXED Vapp Sync
 # ---------------------------------------------------------------------
-st.set_page_config(layout="wide")
+
 # st.title("Schottky Contact Energy Band Diagram")
 st.markdown("""
     <style>
@@ -382,6 +383,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
