@@ -1,8 +1,6 @@
+[server]
+enableCORS = false
+enableXsrfProtection = false
+
 [browser]
 gatherUsageStats = false
-
-[theme]
-base = "dark"
-
-[server]
-enableXsrfProtection = false
