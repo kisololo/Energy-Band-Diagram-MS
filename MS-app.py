@@ -258,7 +258,7 @@ with right:
     # Semiconductor
     ax.plot(x_semi, Ec2, color="#b44e4e", label="Ec")
     ax.plot(x_semi, Ev2, color="#7d6ab0", label="Ev")
-    ax.plot(x_semi, Ef2, "--", color="#6b705c", label="Ef")
+    ax.plot(x_semi, Ef2, "--", color="#6b705c", label="Efn")
 
     ax.axvspan(xmin, 0, color="#e8eef4", alpha=0.42)
     ax.axvline(0, color="black", linewidth=2)
