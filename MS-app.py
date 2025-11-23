@@ -1,12 +1,11 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-import streamlit.components.v1 as components
 
 # ------------------------------
 # Google Analytics (GA4)
 # ------------------------------
-components.html("""
+st.markdown("""
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
 <script>
@@ -15,7 +14,9 @@ components.html("""
   gtag('js', new Date());
   gtag('config', 'G-7SJTF762GX');
 </script>
-""", height=0)
+""", unsafe_allow_html=True)
+
+
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
