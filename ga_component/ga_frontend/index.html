@@ -4,18 +4,15 @@
 <meta charset="utf-8">
 
 <style>
-/* ----------------------------------------------------
-   Remove ALL rendering artifacts, flicker, and borders
-   ---------------------------------------------------- */
+/* Make entire iframe invisible and eliminate flash */
 :root, html, body {
     margin: 0;
     padding: 0;
-    height: 0 !important;                /* Fully invisible */
+    height: 0 !important;
     overflow: hidden !important;
-    background: transparent !important;  /* Prevent flash */
+    background: transparent !important;
 }
 
-/* Streamlit wraps this in an iframe — keep it invisible */
 iframe {
     height: 0 !important;
     width: 0 !important;
@@ -23,24 +20,20 @@ iframe {
     background: transparent !important;
 }
 
-/* Prevent Chrome paint flash */
 * {
     -webkit-tap-highlight-color: transparent !important;
 }
 </style>
 
 <script>
-/* ----------------------------------------------------
-   Google Analytics (GA4)
-   ---------------------------------------------------- */
-
-/* Load GA4 JS */
+// ------------------------------------------------------------
+// 1. Load GA4
+// ------------------------------------------------------------
 const gtagScript = document.createElement("script");
 gtagScript.async = true;
 gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
 document.head.appendChild(gtagScript);
 
-/* Init GA4 */
 const gaInit = document.createElement("script");
 gaInit.innerHTML = `
     window.dataLayer = window.dataLayer || [];
@@ -50,8 +43,33 @@ gaInit.innerHTML = `
 `;
 document.head.appendChild(gaInit);
 
-/* Notify Streamlit that the component finished loading */
-window.parent.postMessage({ type: "GA4_LOADED" }, "*");
+
+// ------------------------------------------------------------
+// 2. REQUIRED STREAMLIT HANDSHAKE
+//    This removes:
+//    - the yellow “component failure” banner
+//    - the flashing line
+// ------------------------------------------------------------
+window.addEventListener("DOMContentLoaded", function () {
+
+    // Tell Streamlit the component iframe is ready
+    window.parent.postMessage(
+        { isStreamlitMessage: true, type: "componentReady" },
+        "*"
+    );
+
+    // Force Streamlit to keep iframe height at 0
+    window.parent.postMessage(
+        { isStreamlitMessage: true, type: "setFrameHeight", height: 0 },
+        "*"
+    );
+
+    // Inform your Streamlit app GA is loaded
+    window.parent.postMessage(
+        { type: "GA4_LOADED" },
+        "*"
+    );
+});
 </script>
 
 </head>
