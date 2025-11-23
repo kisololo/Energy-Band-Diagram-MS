@@ -14,11 +14,21 @@ components.html("""
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
   gtag('js', new Date());
   gtag('config', 'G-7SJTF762GX');
-  console.log("GA4 LOADED SUCCESSFULLY");
+
+  // MANUAL PAGE VIEW (required for iframes)
+  gtag('event', 'page_view', {
+    page_title: document.title,
+    page_location: window.location.href,
+    page_path: window.location.pathname
+  });
+
+  console.log("GA4 LOADED SUCCESSFULLY + PAGE_VIEW FIRED");
 </script>
 """, height=0, width=0)
+
 
 # ------------------------------
 # Google Analytics (GA4)
@@ -379,6 +389,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
