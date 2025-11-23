@@ -9,23 +9,6 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-<style>
-.main {
-    position: relative;
-}
-
-.stCustomComponent {
-    position: absolute !important; /* Force position override */
-    bottom: 0px !important;       /* Move to the bottom edge */
-    width: 100%;                  /* Ensure it spans the full width */
-    z-index: 9999;                /* Keep it above all other elements */
-    max-height: 1px;             /* Optional: Limit the visible height */
-    overflow: hidden;             /* Hide the excess content if limited */
-}
-</style>
-""", unsafe_allow_html=True)
-
 import ga_component
 ga_component.inject()
 # ---------------------------------------------------------------------
@@ -373,7 +356,6 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
-
 
 
 
