@@ -20,7 +20,7 @@ st.markdown("""
     bottom: 0px !important;       /* Move to the bottom edge */
     width: 100%;                  /* Ensure it spans the full width */
     z-index: 9999;                /* Keep it above all other elements */
-    max-height: 50px;             /* Optional: Limit the visible height */
+    max-height: 1px;             /* Optional: Limit the visible height */
     overflow: hidden;             /* Hide the excess content if limited */
 }
 </style>
@@ -373,6 +373,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
