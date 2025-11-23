@@ -3,7 +3,7 @@ import os
 
 _component_func = components.declare_component(
     "ga_inject",
-    path=os.path.join(os.path.dirname(__file__), "ga.js"),
+    path=os.path.join(os.path.dirname(__file__), "frontend"),
 )
 
 def inject():
