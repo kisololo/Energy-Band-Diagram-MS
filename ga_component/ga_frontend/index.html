@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8" />
+
 <style>
+/* Keep component invisible and non-intrusive */
 html, body {
     margin: 0;
     padding: 0;
-    height: 0px !important;   /* FIX: must be non-zero */
+    height: 0 !important;
     overflow: hidden;
 }
 iframe {
-    height: 1px !important;    /* FIX: must be non-zero */
+    height: 1px !important;
 }
 </style>
 
+<!-- Load Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
 <script>
-const script1 = document.createElement("script");
-script1.async = true;
-script1.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
-document.head.appendChild(script1);
-
-const script2 = document.createElement("script");
-script2.innerHTML = `
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'G-7SJTF762GX');
-`;
-document.head.appendChild(script2);
-
-// Tell Streamlit the component loaded successfully
-window.parent.postMessage({ type: "GA4_LOADED" }, "*");
 </script>
+
+<!-- Heartbeat to satisfy Streamlit's new component timeout -->
+<script>
+setInterval(() => {
+    window.parent.postMessage({ type: "GA4_HEARTBEAT" }, "*");
+}, 55000);   // One ping every 55s (minimal, safe)
+</script>
+
 </head>
 
 <body></body>
