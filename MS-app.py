@@ -1,16 +1,15 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
+import ga_component
 
-# ------------------------------------------------------
-# Normal Streamlit settings (MUST be FIRST)
-# ------------------------------------------------------
 st.set_page_config(
     page_title="Schottky Band Diagram",
-    page_icon="⚡",
-    layout="wide"
+    page_icon="⚡", layout="wide"
 )
 
+ga_component.inject()
 
 # ------------------------------
 # Google Analytics (GA4)
@@ -67,11 +66,11 @@ metals = {
     "Pd": 5.60,
 }
 
+
 # ---------------------------------------------------------------------
 # Physics Engine
 # ---------------------------------------------------------------------
 def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax):
-
     Nd = Nd_cm3 * 1e6
     Nc = Nc_cm3
     eps = eps_r * eps0
@@ -99,7 +98,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
         Ev2 = Ec2 - Eg
         Ef2 = Ec2 - kB * T * np.log(Nc / Nd_cm3)
 
-        return x_m*1e9, x_semi*1e9, Ec1, Ef1, Ec2, Ev2, Ef2, E0, x_full*1e9, E0_vac, 0, phi_Bn, phi_bi
+        return x_m * 1e9, x_semi * 1e9, Ec1, Ef1, Ec2, Ev2, Ef2, E0, x_full * 1e9, E0_vac, 0, phi_Bn, phi_bi
 
     # Normal Schottky
     xN = np.sqrt(2 * eps * (phi_bi - Vapp) / (q * Nd))
@@ -109,7 +108,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
     region3 = (x_semi >= xN)
 
     Vx[region2] = phi_bi - Vapp - (q * Nd / (2 * eps)) * ((xN - x_semi[region2]) ** 2)
-    Vx[region3] = (q * Nd / (2 * eps)) * (xN**2)
+    Vx[region3] = (q * Nd / (2 * eps)) * (xN ** 2)
 
     E0 = -Vx
     E0_m = np.zeros_like(x_m)
@@ -125,7 +124,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
     Ef_s = -(chi + phi_Bn - Vapp)
     Ef2 = Ef_s * np.ones_like(x_semi)
 
-    return x_m*1e9, x_semi*1e9, Ec1, Ef1, Ec2, Ev2, Ef2, E0, x_full*1e9, E0_vac, xN*1e9, phi_Bn, phi_bi
+    return x_m * 1e9, x_semi * 1e9, Ec1, Ef1, Ec2, Ev2, Ef2, E0, x_full * 1e9, E0_vac, xN * 1e9, phi_Bn, phi_bi
 
 
 # ---------------------------------------------------------------------
@@ -146,7 +145,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 left, right = st.columns([1.04, 2])
 
 #  Initialize session state for Vapp
@@ -156,9 +154,11 @@ if "Vapp" not in st.session_state:
 if "Vapp_slider" not in st.session_state:
     st.session_state["Vapp_slider"] = 0.0
 
+
 # Sync functions
 def sync_from_box():
     st.session_state["Vapp_slider"] = st.session_state["Vapp"]
+
 
 def sync_from_slider():
     st.session_state["Vapp"] = st.session_state["Vapp_slider"]
@@ -172,7 +172,8 @@ with left:
 
     # ---- Tab 1: Material ----
     with tabs[0]:
-        mat = st.selectbox("Semiconductor Material", list(materials.keys()), index=list(materials.keys()).index("Ga2O3"))
+        mat = st.selectbox("Semiconductor Material", list(materials.keys()),
+                           index=list(materials.keys()).index("Ga2O3"))
         metal = st.selectbox("Metal", list(metals.keys()), index=list(metals.keys()).index("Ni"))
 
     # ---- Tab 2: Semiconductor ----
@@ -230,16 +231,16 @@ with left:
             This simulator is for a clean, classical Schottky contact model.
             The following physical effects are <b>included</b>:
             </p>
-    
+
             <ul style='font-family:Arial; font-size:12px; line-height:1.2;'>
                 <li>1D band diagram under depletion approximation</li>
                 <li>Classical electrostatics (Poisson equation)</li>                
             </ul>
-    
+
             <p style='font-family:Arial; font-size:12px; line-height:1.2;'>
             The following important physics are <b>not yet included</b> in this version:
             </p>
-    
+
             <ul style='font-family:Arial; font-size:12px; line-height:1.2;'>
                 <li>Image-force barrier lowering</li>
                 <li>Fermi-level pinning</li>
@@ -252,7 +253,7 @@ with left:
                 </li>
                 <li>Non-uniform doping</li>
             </ul>
-    
+
             <p style='font-family:Arial; font-size:12px;'>
             These features may appear in future versions of the simulator.
             For research-grade analysis, please interpret results with these limitations in mind.
@@ -265,7 +266,6 @@ with left:
 # RIGHT PANEL — PLOT (Auto-updates)
 # ==============================
 with right:
-
     (x_m, x_semi, Ec1, Ef1, Ec2, Ev2, Ef2,
      E0, x_full, E0_vac, xN, phi_Bn, phi_bi) = compute_schottky(
         Eg, chi, phi_m, Nd, eps_r, Nc, Vapp, T, xmin, xmax
@@ -310,8 +310,6 @@ with right:
     # ax.fill_between(x_m, Ef1, Ef1 - 8, color="#FFD966", alpha=1)
     ax.fill_between(x_m, Ef1, ymin, color="#e3e9f2", alpha=0.55)
 
-
-
     # Semiconductor
     ax.plot(x_semi, Ec2, color="#b44e4e", label=r"$E_C$")
     ax.plot(x_semi, Ev2, color="#7d6ab0", label=r"$E_V$")
@@ -331,7 +329,6 @@ with right:
     ax.legend(fontsize=10, loc="upper right", frameon=True)
 
     st.pyplot(fig)
-
 
 footer = """
 <style>
@@ -373,29 +370,6 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
-
-
-import streamlit.components.v1 as components
-
-components.html("""
-<script>
-window.addEventListener("load", function() {
-    var g = document.createElement("script");
-    g.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
-    g.async = true;
-    document.head.appendChild(g);
-
-    g.onload = function() {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-7SJTF762GX');
-        console.log("GA4 LOADED AFTER PAGE STABILIZED");
-    };
-});
-</script>
-""", height=1)
-
 
 
 
