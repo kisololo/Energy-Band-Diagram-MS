@@ -18,9 +18,11 @@ components.html("""
   // 1. Initial configuration and loading
   gtag('js', new Date());
 
-  // TEMPORARY FIX: Force debug_mode to ensure events show in GA4 DebugView
+  // CRITICAL FIX: Force the page_location to be the parent's URL to bypass 'Unallowed document protocol' error.
+  // We keep 'debug_mode: true' temporarily.
   gtag('config', 'G-7SJTF762GX', {
       'cookie_domain': 'auto',
+      'page_location': window.parent.location.href, // <--- THE FIX
       'debug_mode': true 
   });
 
@@ -28,11 +30,11 @@ components.html("""
   setTimeout(function() {
       console.log("GA4: Firing manual page_view and test event.");
 
-      // MANUAL PAGE VIEW (required for iframes like the one components.html creates)
+      // MANUAL PAGE VIEW
       gtag('event', 'page_view', {
         page_title: document.title,
-        page_location: window.location.href,
-        page_path: window.location.pathname,
+        page_location: window.parent.location.href, // <--- THE FIX
+        page_path: window.parent.location.pathname, // <--- THE FIX (Optional, but good practice)
         send_to: 'G-7SJTF762GX' 
       });
 
@@ -43,11 +45,9 @@ components.html("""
         send_to: 'G-7SJTF762GX'
       });
 
-  }, 100); // Small 100ms delay to ensure GTM is ready
+  }, 100);
 </script>
 """, height=0, width=0)
-
-
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
