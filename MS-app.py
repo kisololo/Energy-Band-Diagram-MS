@@ -17,7 +17,7 @@ components.html("""
 
   gtag('js', new Date());
   gtag('config', 'G-7SJTF762GX');
-  
+
     // MANUAL PAGE VIEW (required for iframes)
   gtag('event', 'page_view', {
     page_title: document.title,
@@ -32,16 +32,10 @@ components.html("""
   });
 
 
-  // MANUAL PAGE VIEW (required for iframes)
-  gtag('event', 'page_view', {
-    page_title: document.title,
-    page_location: window.location.href,
-    page_path: window.location.pathname
-  });
-
   console.log("GA4 LOADED SUCCESSFULLY + PAGE_VIEW FIRED");
 </script>
 """, height=0, width=0)
+
 
 
 # ------------------------------
