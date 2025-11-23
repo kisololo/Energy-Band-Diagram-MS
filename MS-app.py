@@ -9,9 +9,6 @@ st.set_page_config(
     layout="wide"
 )
 
-import ga_component
-ga_component.inject()
-
 
 components.html("""
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
@@ -39,22 +36,6 @@ components.html("""
   console.log("GA4 LOADED SUCCESSFULLY + PAGE_VIEW FIRED");
 </script>
 """, height=0, width=0)
-
-
-
-# ------------------------------
-# Google Analytics (GA4)
-# ------------------------------
-# st.markdown("""
-# <!-- Google tag (gtag.js) -->
-# <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
-# <script>
-#   window.dataLayer = window.dataLayer || [];
-#   function gtag(){dataLayer.push(arguments);}
-#   gtag('js', new Date());
-#   gtag('config', 'G-7SJTF762GX');
-# </script>
-# """, unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------
