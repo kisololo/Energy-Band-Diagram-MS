@@ -1,10 +1,18 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-import streamlit.components.v1 as components
 
 # ------------------------------------------------------
-# GA4 DIRECT INJECTION (replace component, no iframe)
+# Normal Streamlit settings (MUST be FIRST)
+# ------------------------------------------------------
+st.set_page_config(
+    page_title="Schottky Band Diagram",
+    page_icon="⚡",
+    layout="wide"
+)
+
+# ------------------------------------------------------
+# GA4 DIRECT INJECTION (after page_config)
 # ------------------------------------------------------
 st.markdown("""
 <!-- GA4 -->
@@ -17,13 +25,6 @@ st.markdown("""
 </script>
 """, unsafe_allow_html=True)
 
-# ------------------------------------------------------
-# Normal Streamlit settings
-# ------------------------------------------------------
-st.set_page_config(
-    page_title="Schottky Band Diagram",
-    page_icon="⚡",
-)
 
 # ------------------------------
 # Google Analytics (GA4)
@@ -144,7 +145,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 # ---------------------------------------------------------------------
 # STREAMLIT UI — with TABS + FIXED Vapp Sync
 # ---------------------------------------------------------------------
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 # st.title("Schottky Contact Energy Band Diagram")
 st.markdown("""
     <style>
