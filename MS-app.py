@@ -136,7 +136,7 @@ st.markdown(
 )
 
 
-left, right = st.columns([1, 2])
+left, right = st.columns([1.04, 2])
 
 #  Initialize session state for Vapp
 if "Vapp" not in st.session_state:
@@ -157,7 +157,7 @@ def sync_from_slider():
 # LEFT PANEL (TABS)
 # ==============================
 with left:
-    tabs = st.tabs(["Material", "Semiconductor", "Metal", "Bias", "Plot Range"])
+    tabs = st.tabs(["Material", "Semiconductor", "Metal", "Bias", "Plot Range", "Notes"])
 
     # ---- Tab 1: Material ----
     with tabs[0]:
@@ -208,6 +208,47 @@ with left:
         ymin = st.number_input("Ymin (eV)", value=-12.0)
         ymax = st.number_input("Ymax (eV)", value=1.0)
 
+    # ---- Tab 6: Notes ----
+    with tabs[5]:
+        st.markdown(
+            """
+            <p style='font-family:Arial; font-size:14px; line-height:1.2;'>
+            <b>Model Notes</b>
+            </p>
+            <p style='font-family:Arial; font-size:12px; line-height:1.2;'>
+            This simulator is for a clean, classical Schottky contact model.
+            The following physical effects are <b>included</b>:
+            </p>
+    
+            <ul style='font-family:Arial; font-size:12px; line-height:1.2;'>
+                <li>1D band diagram under depletion approximation</li>
+                <li>Classical electrostatics (Poisson equation)</li>                
+            </ul>
+    
+            <p style='font-family:Arial; font-size:12px; line-height:1.2;'>
+            The following important physics are <b>not yet included</b> in this version:
+            </p>
+    
+            <ul style='font-family:Arial; font-size:12px; line-height:1.2;'>
+                <li>Image-force barrier lowering</li>
+                <li>Fermi-level pinning</li>
+                <li>Deep levels / traps / interface states</li>
+                <li>Temperature-dependent:
+                    <ul>
+                        <li>E<sub>g</sub>(T) bandgap narrowing</li>
+                        <li>N<sub>c</sub>, N<sub>v</sub> density-of-states scaling</li>
+                    </ul>
+                </li>
+                <li>Non-uniform doping</li>
+            </ul>
+    
+            <p style='font-family:Arial; font-size:12px;'>
+            These features may appear in future versions of the simulator.
+            For research-grade analysis, please interpret results with these limitations in mind.
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
 
 # ==============================
 # RIGHT PANEL — PLOT (Auto-updates)
