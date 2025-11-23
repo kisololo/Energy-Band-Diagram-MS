@@ -14,9 +14,9 @@ ga_component.inject()
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
-plt.rcParams["figure.figsize"] = (8, 5)
+plt.rcParams["figure.figsize"] = (6, 3)
 plt.rcParams["axes.linewidth"] = 1.8
-plt.rcParams["font.size"] = 12
+plt.rcParams["font.size"] = 11
 plt.rcParams["lines.linewidth"] = 2.4
 
 # ---------------------------------------------------------------------
@@ -123,7 +123,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown(
-    "<h1 style='font-size:32px; font-weight:600; font-family:Arial;'>"
+    "<h1 style='font-size:24px; font-weight:600; font-family:Arial;'>"
     "Schottky Contact Energy Band Diagram"
     "</h1>",
     unsafe_allow_html=True
@@ -261,7 +261,7 @@ with right:
     # --- Clean labels ABOVE the plot using fig.text (outside axes) ---
     # --- Clean, math-mode labels above the plot ---
     fig.text(
-        0.5, 0.985,
+        0.5, 0.999,
         (
             f"Material: {mat}   "
             rf"$E_g={Eg:.2f}\,$eV   "
@@ -270,11 +270,11 @@ with right:
             # rf"$N_c={Nc:.2e}\,\mathrm{{cm}}^{{-3}}$"
             rf"$N_c={Nc:.2e}\,\text{{cm}}^{{-3}}$"  # Cleaner LaTeX for text inside math mode
         ),
-        ha="center", va="top", fontsize=11, fontfamily="Arial"
+        ha="center", va="top", fontsize=9, fontfamily="Arial"
     )
 
     fig.text(
-        0.5, 0.945,
+        0.5, 0.940,
         (
             f"Metal: {metal}   "
             rf"$\Phi_m={phi_m:.2f}\,$eV   "
@@ -283,7 +283,7 @@ with right:
             rf"$x_N={xN:.1f}\,$nm   "
             rf"$V_{{app}}={Vapp:.2f}\,$V"
         ),
-        ha="center", va="top", fontsize=11, fontfamily="Arial"
+        ha="center", va="top", fontsize=9, fontfamily="Arial"
     )
 
     # Vacuum level
@@ -309,9 +309,9 @@ with right:
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    ax.set_xlabel("Position (nm)", fontsize=14)
-    ax.set_ylabel("Energy (eV)", fontsize=14)
-    ax.legend(fontsize=10, loc="upper right", frameon=True)
+    ax.set_xlabel("Position (nm)", fontsize=11)
+    ax.set_ylabel("Energy (eV)", fontsize=11)
+    ax.legend(fontsize=9, loc="upper right", frameon=True)
 
     st.pyplot(fig)
 
