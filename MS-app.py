@@ -2,15 +2,28 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
-import ga_component
 
+# ------------------------------------------------------
+# GA4 DIRECT INJECTION (replace component, no iframe)
+# ------------------------------------------------------
+st.markdown("""
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SJTF762GX');
+</script>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------------
+# Normal Streamlit settings
+# ------------------------------------------------------
 st.set_page_config(
     page_title="Schottky Band Diagram",
     page_icon="⚡",
 )
-
-ga_component.inject()
-
 
 # ------------------------------
 # Google Analytics (GA4)
