@@ -5,13 +5,14 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 0 !important;
+    height: 1px !important;   /* FIX: must be non-zero */
     overflow: hidden;
 }
 iframe {
-    height: 0 !important;
+    height: 1px !important;    /* FIX: must be non-zero */
 }
 </style>
+
 <script>
 const script1 = document.createElement("script");
 script1.async = true;
@@ -27,8 +28,10 @@ script2.innerHTML = `
 `;
 document.head.appendChild(script2);
 
+// Tell Streamlit the component loaded successfully
 window.parent.postMessage({ type: "GA4_LOADED" }, "*");
 </script>
 </head>
+
 <body></body>
 </html>
