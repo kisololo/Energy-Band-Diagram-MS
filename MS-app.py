@@ -9,23 +9,16 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-<div id="ga4_status" style="
-    position: fixed;
-    top: 5px;
-    right: 5px;
-    background: #222; 
-    color: #0f0; 
-    padding: 6px 10px; 
-    font-size: 12px;
-    font-family: monospace;
-    border-radius: 4px;
-    z-index: 999999;
-">
-GA4 DEBUG: initializing...
-</div>
-
+components.html("""
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
 <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SJTF762GX');
+  console.log("GA4 LOADED SUCCESSFULLY");
+</script>
+""", height=0, width=0)
 
 // ===============================================================
 // 1. DEBUG PANEL WRITER
@@ -497,6 +490,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
