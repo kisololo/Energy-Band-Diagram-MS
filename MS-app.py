@@ -161,7 +161,7 @@ with left:
 
     # ---- Tab 1: Material ----
     with tabs[0]:
-        mat = st.selectbox("Semiconductor Material", list(materials.keys()), index=list(materials.keys()).index("GaN"))
+        mat = st.selectbox("Semiconductor Material", list(materials.keys()), index=list(materials.keys()).index("Ga2O3"))
         metal = st.selectbox("Metal", list(metals.keys()), index=list(metals.keys()).index("Ni"))
 
     # ---- Tab 2: Semiconductor ----
@@ -326,12 +326,12 @@ footer = """
 <style>
 .footerbox {
     width: 100%;
-    margin-top: 30px;
+    margin-top: 5px;
     padding: 25px 0;
     text-align: center;
     color: #bbbbbb;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.5;
     border-top: 1px solid #444444;
 }
 .footerbox a {
@@ -343,16 +343,23 @@ footer = """
 <div class="footerbox">
 <b>Schottky Contact Energy Band Diagram Simulator</b><br>
 Developed by Kai Fu, University of Utah<br>
-Version 1.0 (2025)<br><br>
+Version 1.0 (2025)<br>
+
+<!-- CUSTOM SPACING ABOVE GITHUB LINK -->
+<div style="margin: 20px 0;"></div>
 
 <a href="https://github.com/kisololo/Energy-Band-Diagram-MS" target="_blank">
 GitHub Repository (Source Code)
-</a><br><br>
+</a>
 
-<b>Citation:</b><br>
+<!-- CUSTOM SPACING BELOW GITHUB LINK -->
+<div style="margin: 20px 0;"></div>
+
+Citation:<br>
 If you use this app for teaching or research, please cite:<br>
 <i>Kai Fu, "Interactive Schottky Contact Energy Band Diagram Simulator," 2025.</i>
 </div>
+
 """
 st.markdown(footer, unsafe_allow_html=True)
 
