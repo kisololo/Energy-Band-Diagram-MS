@@ -13,25 +13,36 @@ iframe {
 }
 </style>
 
-<!-- Disable ad-related tracking to prevent blocked requests -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  window['ga-disable-ads'] = true; 
-</script>
+// 1. Tell Streamlit the component is alive IMMEDIATELY
+window.parent.postMessage({type: "GA4_PING"}, "*");
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
-<script>
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-7SJTF762GX', { 
-      'allow_ad_personalization_signals': false 
-  });
-</script>
+// 2. Load GA4 **after** Streamlit finishes mounting (~10ms delay)
+setTimeout(() => {
 
-<script>
-window.parent.postMessage({ type: "GA4_LOADED" }, "*");
-</script>
+    // GA4 loader
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
+    document.head.appendChild(s);
 
+    // GA4 config
+    const cfg = document.createElement("script");
+    cfg.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-7SJTF762GX');
+    `;
+    document.head.appendChild(cfg);
+
+    // Optional: Tell Streamlit GA4 finished
+    window.parent.postMessage({type: "GA4_READY"}, "*");
+
+}, 10);  // <-- small delay fixes shine + timeout
+
+</script>
 </head>
+
 <body></body>
 </html>
