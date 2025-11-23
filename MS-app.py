@@ -17,7 +17,11 @@ components.html("""
 
   // 1. Initial configuration and loading
   gtag('js', new Date());
-  gtag('config', 'G-7SJTF762GX');
+
+  // FIX: Force cookie_domain to auto to handle iframe cross-site context
+  gtag('config', 'G-7SJTF762GX', {
+      'cookie_domain': 'auto'
+  });
 
   // 2. Wait for GA4 to load, then fire the page_view manually
   setTimeout(function() {
@@ -28,7 +32,7 @@ components.html("""
         page_title: document.title,
         page_location: window.location.href,
         page_path: window.location.pathname,
-        send_to: 'G-7SJTF762GX' // Ensure it targets the correct property
+        send_to: 'G-7SJTF762GX' 
       });
 
       // MANUAL TEST EVENT
