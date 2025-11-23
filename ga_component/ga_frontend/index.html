@@ -28,8 +28,11 @@ script2.innerHTML = `
 `;
 document.head.appendChild(script2);
 
-// Tell Streamlit the component loaded successfully
-window.parent.postMessage({ type: "GA4_LOADED" }, "*");
+// Tell Streamlit GA4 is fully ready (wait for gtag.js async load)
+script1.onload = () => {
+    window.parent.postMessage({ type: "GA4_LOADED" }, "*");
+};
+
 </script>
 </head>
 
