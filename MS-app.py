@@ -226,29 +226,34 @@ with right:
     # --- Clean, math-mode labels above the plot ---
     fig.text(
         0.5, 0.985,
-        rf"$\mathrm{{Material:}}\ {mat}\quad "
-        rf"E_g={Eg:.2f}\ \mathrm{{eV}}\quad "
-        rf"\chi={chi:.2f}\ \mathrm{{eV}}\quad "
-        rf"\varepsilon_r={eps_r:.1f}\quad "
-        rf"N_c={Nc:.2e}\ \mathrm{{cm}}^{{-3}}$",
-        ha="center", va="top", fontsize=11
+        (
+            f"Material: {mat}   "
+            rf"$E_g={Eg:.2f}\,$eV   "
+            rf"$\chi={chi:.2f}\,$eV   "
+            rf"$\varepsilon_r={eps_r:.1f}$   "
+            rf"$N_c={Nc:.2e}\,\mathrm{{cm}}^{{-3}}$"
+        ),
+        ha="center", va="top", fontsize=11, fontfamily="Arial"
     )
 
     fig.text(
         0.5, 0.945,
-        rf"$\mathrm{{Metal:}}\ {metal}\ (\Phi_m={phi_m:.2f}\ \mathrm{{eV}})\quad "
-        rf"\phi_{{Bn}}={phi_Bn:.2f}\ \mathrm{{eV}}\quad "
-        rf"\phi_{{bi}}={phi_bi:.2f}\ \mathrm{{eV}}\quad "
-        rf"x_N={xN:.1f}\ \mathrm{{nm}}\quad "
-        rf"V_{{app}}={Vapp:.2f}\ \mathrm{{V}}$",
-        ha="center", va="top", fontsize=11
+        (
+            f"Metal: {metal}   "
+            rf"$\Phi_m={phi_m:.2f}\,$eV   "
+            rf"$\phi_{{Bn}}={phi_Bn:.2f}\,$eV   "
+            rf"$\phi_{{bi}}={phi_bi:.2f}\,$eV   "
+            rf"$x_N={xN:.1f}\,$nm   "
+            rf"$V_{{app}}={Vapp:.2f}\,$V"
+        ),
+        ha="center", va="top", fontsize=11, fontfamily="Arial"
     )
 
     # Vacuum level
-    ax.plot(x_full, E0_vac, "--", color="#9aa4b0", linewidth=1.8, label="E0 (vacuum)")
+    ax.plot(x_full, E0_vac, "--", color="#9aa4b0", linewidth=1.8, label=r"$E_0$ (vacuum)")
 
     # Metal
-    ax.plot(x_m, Ef1, color="#FFC000", label="Ef metal")
+    ax.plot(x_m, Ef1, color="#FFC000", label=r"$E_F$ metal")
     ax.fill_between(x_m, Ef1 - 0.1, Ef1 + 0.1, color="#FFD966", alpha=0.45)
     # ax.fill_between(x_m, Ef1, Ef1 - 8, color="#FFD966", alpha=1)
     ax.fill_between(x_m, Ef1, ymin, color="#e3e9f2", alpha=0.55)
@@ -256,9 +261,9 @@ with right:
 
 
     # Semiconductor
-    ax.plot(x_semi, Ec2, color="#b44e4e", label="Ec")
-    ax.plot(x_semi, Ev2, color="#7d6ab0", label="Ev")
-    ax.plot(x_semi, Ef2, "--", color="#6b705c", label="Efn")
+    ax.plot(x_semi, Ec2, color="#b44e4e", label=r"$E_C$")
+    ax.plot(x_semi, Ev2, color="#7d6ab0", label=r"$E_V$")
+    ax.plot(x_semi, Ef2, "--", color="#6b705c", label=r"$E_{Fn}$")
 
     ax.axvspan(xmin, 0, color="#e8eef4", alpha=0.42)
     ax.axvline(0, color="black", linewidth=2)
