@@ -12,12 +12,15 @@ iframe {
     height: 0 !important;
 }
 </style>
+
 <script>
+// Load GA script 1
 const script1 = document.createElement("script");
 script1.async = true;
 script1.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
 document.head.appendChild(script1);
 
+// Load GA script 2
 const script2 = document.createElement("script");
 script2.innerHTML = `
   window.dataLayer = window.dataLayer || [];
@@ -27,6 +30,13 @@ script2.innerHTML = `
 `;
 document.head.appendChild(script2);
 
+// Tell Streamlit the component finished loading
+window.parent.postMessage(
+  { isStreamlitMessage: true, type: "renderDone" },
+  "*"
+);
+
+// Optional debug message
 window.parent.postMessage({ type: "GA4_LOADED" }, "*");
 </script>
 </head>
