@@ -5,11 +5,11 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 0px !important;   /* FIX: must be non-zero */
+    height: 0px !important;
     overflow: hidden;
 }
 iframe {
-    height: 1px !important;    /* FIX: must be non-zero */
+    height: 1px !important;
 }
 </style>
 
@@ -28,11 +28,10 @@ script2.innerHTML = `
 `;
 document.head.appendChild(script2);
 
-// Tell Streamlit GA4 is fully ready (wait for gtag.js async load)
+// FIX: delay message until GA4 script fully loads
 script1.onload = () => {
     window.parent.postMessage({ type: "GA4_LOADED" }, "*");
 };
-
 </script>
 </head>
 
