@@ -2,6 +2,12 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+st.set_page_config(
+    page_title="Schottky Band Diagram",
+    page_icon="⚡",
+)
+
 # ------------------------------
 # Google Analytics (GA4)
 # ------------------------------
