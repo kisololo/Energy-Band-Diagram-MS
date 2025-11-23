@@ -1,7 +1,24 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
 
+# ---------------------------------------------------
+# Google Analytics (GA4)
+# ---------------------------------------------------
+components.html(
+    """
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7SJTF762GX');
+    </script>
+    """,
+    height=0,
+)
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
