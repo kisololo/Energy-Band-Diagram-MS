@@ -2,15 +2,15 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
-
-# inject GA into parent HTML (escaping iframe)
-with open("ga_injector.html") as f:
-    components.html(f.read(), height=0)
+import ga_component
 
 st.set_page_config(
     page_title="Schottky Band Diagram",
     page_icon="⚡",
 )
+
+ga_component.inject()
+
 
 # ------------------------------
 # Google Analytics (GA4)
