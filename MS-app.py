@@ -8,46 +8,8 @@ st.set_page_config(
     page_icon="⚡",
     layout="wide"
 )
-
-components.html("""
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-
-  // 1. Initial configuration and loading
-  gtag('js', new Date());
-
-  // CRITICAL FIX: Force the page_location to be the parent's URL to bypass 'Unallowed document protocol' error.
-  // We keep 'debug_mode: true' temporarily.
-  gtag('config', 'G-7SJTF762GX', {
-      'cookie_domain': 'auto',
-      'page_location': window.parent.location.href, // <--- THE FIX
-      'debug_mode': true 
-  });
-
-  // 2. Wait for GA4 to load, then fire the page_view manually
-  setTimeout(function() {
-      console.log("GA4: Firing manual page_view and test event.");
-
-      // MANUAL PAGE VIEW
-      gtag('event', 'page_view', {
-        page_title: document.title,
-        page_location: window.parent.location.href, // <--- THE FIX
-        page_path: window.parent.location.pathname, // <--- THE FIX (Optional, but good practice)
-        send_to: 'G-7SJTF762GX' 
-      });
-
-      // MANUAL TEST EVENT
-      gtag('event', 'test_event_from_iframe', {
-        status: "success",
-        time: new Date().toISOString(),
-        send_to: 'G-7SJTF762GX'
-      });
-
-  }, 100);
-</script>
-""", height=0, width=0)
+import ga_component
+ga_component.inject()
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
