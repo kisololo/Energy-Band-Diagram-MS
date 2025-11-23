@@ -374,22 +374,18 @@ If you use this app for teaching or research, please cite:<br>
 """
 st.markdown(footer, unsafe_allow_html=True)
 
-st.markdown("""
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var gtagScript = document.createElement("script");
-    gtagScript.async = true;
-    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
-    document.head.appendChild(gtagScript);
 
-    gtagScript.onload = function() {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-7SJTF762GX');
-    };
-});
+import streamlit.components.v1 as components
+
+components.html("""
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SJTF762GX');
 </script>
-""", unsafe_allow_html=True)
+""", height=0)
+
 
 
