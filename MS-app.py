@@ -11,20 +11,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# ------------------------------------------------------
-# GA4 DIRECT INJECTION (after page_config)
-# ------------------------------------------------------
-st.markdown("""
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-7SJTF762GX');
-</script>
-""", unsafe_allow_html=True)
-
 
 # ------------------------------
 # Google Analytics (GA4)
@@ -345,6 +331,24 @@ with right:
     ax.legend(fontsize=10, loc="upper right", frameon=True)
 
     st.pyplot(fig)
+
+st.markdown("""
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var gtagScript = document.createElement("script");
+    gtagScript.async = true;
+    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
+    document.head.appendChild(gtagScript);
+
+    gtagScript.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-7SJTF762GX');
+    };
+});
+</script>
+""", unsafe_allow_html=True)
 
 
 footer = """
