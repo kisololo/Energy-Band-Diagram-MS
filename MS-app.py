@@ -11,29 +11,20 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-.stCustomComponent { 
-    display: none !important;
+.main {
+    position: relative;
+}
+
+.stCustomComponent {
+    position: absolute !important; /* Force position override */
+    bottom: 0px !important;       /* Move to the bottom edge */
+    width: 100%;                  /* Ensure it spans the full width */
+    z-index: 9999;                /* Keep it above all other elements */
+    max-height: 50px;             /* Optional: Limit the visible height */
+    overflow: hidden;             /* Hide the excess content if limited */
 }
 </style>
 """, unsafe_allow_html=True)
-# st.markdown("""
-# <style>
-# /* 1. Target the main content area to enable relative positioning */
-# .main {
-#     position: relative;
-# }
-#
-# /* 2. Target the custom component wrapper (which contains the warning box) */
-# .stCustomComponent {
-#     position: absolute !important; /* Force position override */
-#     bottom: 0px !important;       /* Move to the bottom edge */
-#     width: 100%;                  /* Ensure it spans the full width */
-#     z-index: 9999;                /* Keep it above all other elements */
-#     max-height: 50px;             /* Optional: Limit the visible height */
-#     overflow: hidden;             /* Hide the excess content if limited */
-# }
-# </style>
-# """, unsafe_allow_html=True)
 
 import ga_component
 ga_component.inject()
