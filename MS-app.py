@@ -9,31 +9,36 @@ st.set_page_config(
     layout="wide"
 )
 
-
 components.html("""
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
 
+  // 1. Initial configuration and loading
   gtag('js', new Date());
   gtag('config', 'G-7SJTF762GX');
 
-    // MANUAL PAGE VIEW (required for iframes)
-  gtag('event', 'page_view', {
-    page_title: document.title,
-    page_location: window.location.href,
-    page_path: window.location.pathname
-  });
+  // 2. Wait for GA4 to load, then fire the page_view manually
+  setTimeout(function() {
+      console.log("GA4: Firing manual page_view and test event.");
 
-  // MANUAL TEST EVENT
-  gtag('event', 'test_event_from_iframe', {
-    status: "ok",
-    time: new Date().toISOString()
-  });
+      // MANUAL PAGE VIEW (required for iframes like the one components.html creates)
+      gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        send_to: 'G-7SJTF762GX' // Ensure it targets the correct property
+      });
 
+      // MANUAL TEST EVENT
+      gtag('event', 'test_event_from_iframe', {
+        status: "success",
+        time: new Date().toISOString(),
+        send_to: 'G-7SJTF762GX'
+      });
 
-  console.log("GA4 LOADED SUCCESSFULLY + PAGE_VIEW FIRED");
+  }, 100); // Small 100ms delay to ensure GTM is ready
 </script>
 """, height=0, width=0)
 
