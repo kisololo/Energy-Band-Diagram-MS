@@ -9,8 +9,36 @@ st.set_page_config(
     layout="wide"
 )
 
-import ga_component
-ga_component.inject()
+
+# ---------------------------------------------------------------------
+# FINAL GA4 INJECTION (No Custom Component - Self-Contained)
+# We use the sidebar to minimize visual space on the main page.
+# ---------------------------------------------------------------------
+with st.sidebar:
+    components.html(f"""
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+
+      gtag('js', new Date());
+
+      // CRITICAL FIX: Forces GA4 to use the parent's URL to prevent all errors
+      gtag('config', 'G-7SJTF762GX', {{
+          'cookie_domain': 'auto',
+          'page_location': window.parent.location.href, // <--- THE FIX
+          'debug_mode': true 
+      }});
+
+      // Manual page view event
+      setTimeout(function() {{
+          gtag('event', 'page_view', {{
+            page_location: window.parent.location.href
+          }});
+      }}, 100);
+    </script>
+    """, height=1, width=1)  # <-- Set height/width to minimum size
+
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
