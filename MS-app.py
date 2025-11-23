@@ -248,9 +248,11 @@ with right:
     ax.plot(x_full, E0_vac, "--", color="#9aa4b0", linewidth=1.8, label="E0 (vacuum)")
 
     # Metal
-    ax.plot(x_m, Ef1, color="#4472c4", label="Ef metal")
-    ax.fill_between(x_m, Ef1 + 0.1, Ef1 - 0.1, color="#9bbad0", alpha=0.45)
+    ax.plot(x_m, Ef1, color="#FFC000", label="Ef metal")
+    ax.fill_between(x_m, Ef1 - 0.1, Ef1 + 0.1, color="#FFD966", alpha=0.45)
+    # ax.fill_between(x_m, Ef1, Ef1 - 8, color="#FFD966", alpha=1)
     ax.fill_between(x_m, Ef1, ymin, color="#e3e9f2", alpha=0.55)
+
 
 
     # Semiconductor
