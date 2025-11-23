@@ -9,6 +9,16 @@ st.set_page_config(
     page_icon="⚡",
 )
 
+st.markdown("""
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SJTF762GX');
+</script>
+""", unsafe_allow_html=True)
+
 ga_component.inject()
 
 
@@ -372,6 +382,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
