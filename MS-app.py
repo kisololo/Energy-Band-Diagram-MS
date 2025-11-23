@@ -9,6 +9,10 @@ st.set_page_config(
     layout="wide"
 )
 
+import ga_component
+ga_component.inject()
+
+
 components.html("""
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
 <script>
