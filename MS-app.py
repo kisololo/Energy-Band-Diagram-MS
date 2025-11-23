@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
-import ga_component
 
 st.set_page_config(
     page_title="Schottky Band Diagram",
@@ -19,9 +18,6 @@ st.markdown("""
   gtag('config', 'G-7SJTF762GX');
 </script>
 """, unsafe_allow_html=True)
-
-ga_component.inject()
-
 
 
 # ------------------------------
@@ -383,6 +379,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
