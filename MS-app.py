@@ -3,6 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
+# Hide the yellow Streamlit component warning box
+hide_warning = """
+<style>
+.stAlert {display: none;}
+</style>
+"""
+st.markdown(hide_warning, unsafe_allow_html=True)
+
 st.set_page_config(
     page_title="Schottky Band Diagram",
     page_icon="⚡",
@@ -356,6 +364,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
