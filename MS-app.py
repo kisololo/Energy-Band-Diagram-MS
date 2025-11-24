@@ -374,7 +374,7 @@ GitHub Repository (Source Code)
 
 Citation:<br>
 If you use this app for teaching or research, please cite:<br>
-<i>Kai Fu, "Interactive Schottky Contact Energy Band Diagram Simulator," 2025. https://energy-band-diagram-ms.streamlit.app/</i>
+<i>Kai Fu, "Interactive Schottky Contact Energy Band Diagram Simulator," 11/23/2025. https://energy-band-diagram-ms.streamlit.app/</i>
 </div>
 
 """
