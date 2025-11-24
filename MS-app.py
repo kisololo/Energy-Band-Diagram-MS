@@ -3,6 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
+hide_top_loader = """
+<style>
+div[data-testid="stStatusWidget"] {display: none !important;}
+div[data-testid="stProgressBar"] {display: none !important;}
+div[data-testid="stAppDeployButton"] {display: none !important;}
+div[data-testid="stDecoration"] {display: none !important;}
+</style>
+"""
+st.markdown(hide_top_loader, unsafe_allow_html=True)
+
 # Hide the yellow Streamlit component warning box
 hide_warning = """
 <style>
@@ -364,6 +374,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
