@@ -23,7 +23,7 @@ ga_component.inject()
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
-plt.rcParams["figure.figsize"] = (6, 3.5)
+plt.rcParams["figure.figsize"] = (6, 3.2)
 plt.rcParams["axes.linewidth"] = 1.8
 plt.rcParams["font.size"] = 11
 plt.rcParams["lines.linewidth"] = 2.4
@@ -364,6 +364,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
