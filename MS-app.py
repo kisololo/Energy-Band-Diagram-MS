@@ -3,25 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
-GA_SCRIPT = """
+st.html("""
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-7SJTF762GX', {
-      page_location: window.location.href,
-      send_page_view: true
-  });
+  gtag('config', 'G-7SJTF762GX');
 </script>
-"""
-
-components.html(
-    f"<div>{GA_SCRIPT}</div>",
-    height=0,
-    width=0,
-    unsafe_allow_html=True   # ⭐ REQUIRED OR GA DOES NOT WORK
-)
+""")
 
 
 st.set_page_config(
