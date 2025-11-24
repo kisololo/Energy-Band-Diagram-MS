@@ -3,31 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
-hide_streamlit_loader = """
-<style>
-/* Hide Streamlit’s top loading overlay and progress bar */
-div[data-testid="stBlock"] > div[style*="position: absolute"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
-    opacity: 0 !important;
-}
-
-/* Hide ANY initial loading container */
-div[data-testid="stAppViewContainer"] div[style*="top: 0px"] {
-    display: none !important;
-}
-
-/* Hide mysterious top padding / animation container */
-div[data-testid="stDecoration"] {
-    display: none !important;
-}
-</style>
-"""
-st.markdown(hide_streamlit_loader, unsafe_allow_html=True)
-
-
 # Hide the yellow Streamlit component warning box
 hide_warning = """
 <style>
@@ -42,13 +17,37 @@ st.set_page_config(
     layout="wide"
 )
 
-import ga_component
-ga_component.inject()
+# ---------------------------
+# Inject GA4 into <head>
+# ---------------------------
+components.html(
+    """
+    <script>
+      const s1 = document.createElement('script');
+      s1.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
+      s1.async = true;
+      document.head.appendChild(s1);
+
+      const s2 = document.createElement('script');
+      s2.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-7SJTF762GX');
+      `;
+      document.head.appendChild(s2);
+    </script>
+    """,
+    height=0,
+    width=0
+)
+
+
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
-plt.rcParams["figure.figsize"] = (6, 3)
+plt.rcParams["figure.figsize"] = (5.3, 3.1)
 plt.rcParams["axes.linewidth"] = 1.8
 plt.rcParams["font.size"] = 11
 plt.rcParams["lines.linewidth"] = 2.4
@@ -389,18 +388,3 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
