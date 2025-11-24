@@ -265,25 +265,25 @@ with right:
     )
 
     fig, ax = plt.subplots()
+    fig.subplots_adjust(top=0.88)  # Reserve a fixed 15% space for labels
+    # --- FIXED HEIGHT LABEL BOX (DO NOT MOVE WHEN TEXT CHANGES) ---
+    LABEL_Y_TOP = 1  # top line position (constant)
+    LABEL_LINE_SPACING = 0.05  # constant spacing between lines
 
-    # --- Clean inline labels above the plot (no box) ---
-    # --- Clean labels ABOVE the plot using fig.text (outside axes) ---
-    # --- Clean, math-mode labels above the plot ---
     fig.text(
-        0.5, 0.999,
+        0.5, LABEL_Y_TOP,
         (
             f"Material: {mat}   "
             rf"$E_g={Eg:.2f}\,$eV   "
             rf"$\chi={chi:.2f}\,$eV   "
             rf"$\varepsilon_r={eps_r:.1f}$   "
-            # rf"$N_c={Nc:.2e}\,\mathrm{{cm}}^{{-3}}$"
-            rf"$N_c={Nc:.2e}\,\text{{cm}}^{{-3}}$"  # Cleaner LaTeX for text inside math mode
+            rf"$N_c={Nc:.2e}\,\text{{cm}}^{{-3}}$"
         ),
-        ha="center", va="top", fontsize=9, fontfamily="Arial"
+        ha="center", va="top", fontsize=8, fontfamily="Arial"
     )
 
     fig.text(
-        0.5, 0.940,
+        0.5, LABEL_Y_TOP - LABEL_LINE_SPACING,
         (
             f"Metal: {metal}   "
             rf"$\Phi_m={phi_m:.2f}\,$eV   "
@@ -292,7 +292,7 @@ with right:
             rf"$x_N={xN:.1f}\,$nm   "
             rf"$V_{{app}}={Vapp:.2f}\,$V"
         ),
-        ha="center", va="top", fontsize=9, fontfamily="Arial"
+        ha="center", va="top", fontsize=8, fontfamily="Arial"
     )
 
     # Vacuum level
@@ -364,17 +364,3 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
