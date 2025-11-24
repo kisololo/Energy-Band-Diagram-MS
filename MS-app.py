@@ -22,8 +22,6 @@ st.set_page_config(
     layout="wide"
 )
 
-import ga_component
-ga_component.inject()
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
