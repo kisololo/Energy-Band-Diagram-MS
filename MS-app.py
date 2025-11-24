@@ -150,11 +150,20 @@ if "Vapp_slider" not in st.session_state:
 
 # Sync functions
 def sync_from_box():
-    st.session_state["Vapp_slider"] = st.session_state["Vapp"]
+    v = st.session_state["Vapp_input"]
+    st.session_state["Vapp"] = v
+    if -5 <= v <= 5:
+        st.session_state["Vapp_slider"] = v  # safe sync
+    else:
+        # Reject out-of-range input
+        pass
 
 
 def sync_from_slider():
-    st.session_state["Vapp"] = st.session_state["Vapp_slider"]
+    v = st.session_state["Vapp_slider"]
+    st.session_state["Vapp"] = v
+    st.session_state["Vapp_input"] = v  # update text box
+
 
 
 # ==============================
@@ -187,13 +196,17 @@ with left:
         phi_m = st.number_input("Metal work function Φm (eV)", value=metals[metal])
 
     # ---- Tab 4: Bias (Synced Inputs)----
+    # ---- Tab 4: Bias (Synced Inputs) ----
     with tabs[3]:
+        # Text box uses its own key
         st.number_input(
             "Enter Vapp (V)",
-            key="Vapp",
+            key="Vapp_input",
+            value=st.session_state["Vapp"],  # show current Vapp
             on_change=sync_from_box
         )
 
+        # Slider uses separate key
         st.slider(
             "Adjust Vapp",
             -5.0,
@@ -202,6 +215,7 @@ with left:
             on_change=sync_from_slider
         )
 
+        # Final Vapp used everywhere
         Vapp = st.session_state["Vapp"]
 
         T = st.number_input("Temperature (K)", value=300.0)
