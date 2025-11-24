@@ -1,0 +1,6 @@
+{
+  "name": "GA Inject Minimal",
+  "namespace": "ga_inject",
+  "version": "0.1.0",
+  "description": "Minimal GA4 injector component."
+}
