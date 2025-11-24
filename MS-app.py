@@ -127,7 +127,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 # st.title("Schottky Contact Energy Band Diagram")
 st.markdown("""
     <style>
-        .block-container { padding-top: 0.25rem; }
+        .block-container { padding-top: 0.13rem; }
     </style>
 """, unsafe_allow_html=True)
 
