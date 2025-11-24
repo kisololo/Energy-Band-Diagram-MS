@@ -3,13 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
-# Hide the yellow Streamlit component warning box
-hide_warning = """
-<style>
-.stAlert {display: none;}
-</style>
+GA_JS = """
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7SJTF762GX');
+</script>
 """
-st.markdown(hide_warning, unsafe_allow_html=True)
+
+st.markdown(GA_JS, unsafe_allow_html=True)
 
 st.set_page_config(
     page_title="Schottky Band Diagram",
