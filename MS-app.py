@@ -3,13 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
-# Hide the yellow Streamlit component warning box
-hide_warning = """
-<style>
-.stAlert {display: none;}
-</style>
-"""
-st.markdown(hide_warning, unsafe_allow_html=True)
+st.markdown("""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-7SJTF762GX');
+</script>
+""", unsafe_allow_html=True)
+
 
 st.set_page_config(
     page_title="Schottky Band Diagram",
@@ -17,13 +22,11 @@ st.set_page_config(
     layout="wide"
 )
 
-import ga_component
-ga_component.inject()
 # ---------------------------------------------------------------------
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
-plt.rcParams["figure.figsize"] = (6, 3)
+plt.rcParams["figure.figsize"] = (5.3, 3.5)
 plt.rcParams["axes.linewidth"] = 1.8
 plt.rcParams["font.size"] = 11
 plt.rcParams["lines.linewidth"] = 2.4
@@ -359,20 +362,8 @@ GitHub Repository (Source Code)
 
 Citation:<br>
 If you use this app for teaching or research, please cite:<br>
-<i>Kai Fu, "Interactive Schottky Contact Energy Band Diagram Simulator," 2025.</i>
+<i>Kai Fu, "Interactive Schottky Contact Energy Band Diagram Simulator," 2025. https://energy-band-diagram-ms.streamlit.app/</i>
 </div>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
-
-
-
-
-
-
-
-
-
-
-
-
