@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 
+<!-- Load GA4 script -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
+
+<script>
+// Inject GA4 into the parent document so it behaves like normal website analytics
+(function() {
+
+  // Attach GA to parent window, not this iframe
+  const parentWin = window.parent;
+
+  // Inject GA loader
+  const s1 = parentWin.document.createElement("script");
+  s1.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
+  s1.async = true;
+  parentWin.document.head.appendChild(s1);
+
+  // GA initialization
+  const s2 = parentWin.document.createElement("script");
+  s2.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7SJTF762GX', {
+          page_location: window.parent.location.href
+      });
+  `;
+  parentWin.document.head.appendChild(s2);
+
+  // Tell Streamlit that the component has loaded (so shining bar disappears instantly)
+  window.parent.postMessage({ type: "streamlit:componentReady" }, "*");
+  window.parent.postMessage({ type: "streamlit:componentValue", value: null }, "*");
+
+})();
+</script>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 1px !important;
+    overflow: hidden;
+}
+</style>
+
+</head>
+<body></body>
+</html>
