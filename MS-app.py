@@ -25,7 +25,7 @@ ga_component.inject()
 plt.rcParams["font.family"] = "Arial"
 plt.rcParams["figure.figsize"] = (6, 3.3)
 plt.rcParams["axes.linewidth"] = 1.8
-plt.rcParams["font.size"] = 11
+plt.rcParams["font.size"] = 10
 plt.rcParams["lines.linewidth"] = 2.4
 
 # ---------------------------------------------------------------------
@@ -318,9 +318,9 @@ with right:
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    ax.set_xlabel("Position (nm)", fontsize=11)
-    ax.set_ylabel("Energy (eV)", fontsize=11)
-    ax.legend(fontsize=9, loc="upper right", frameon=True)
+    ax.set_xlabel("Position (nm)", fontsize=10)
+    ax.set_ylabel("Energy (eV)", fontsize=10)
+    ax.legend(fontsize=8, loc="upper right", frameon=True)
 
     st.pyplot(fig)
 
