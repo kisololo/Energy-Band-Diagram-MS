@@ -3,15 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
-hide_top_loader = """
+hide_ga_iframe = """
 <style>
-div[data-testid="stStatusWidget"] {display: none !important;}
-div[data-testid="stProgressBar"] {display: none !important;}
-div[data-testid="stAppDeployButton"] {display: none !important;}
-div[data-testid="stDecoration"] {display: none !important;}
+iframe[src*="ga_inject"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+}
 </style>
 """
-st.markdown(hide_top_loader, unsafe_allow_html=True)
+st.markdown(hide_ga_iframe, unsafe_allow_html=True)
 
 # Hide the yellow Streamlit component warning box
 hide_warning = """
@@ -374,6 +377,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
