@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
+<!-- Load GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX"></script>
 
 <script>
@@ -11,15 +12,14 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){ dataLayer.push(arguments); }
 gtag('js', new Date());
 
-// CRITICAL GA4 FIX: Injecting the parent URL into the config.
-// This ensures GA4 accepts the hit, bypassing the 'about:srcdoc' rejection.
+// GA4 fix: use parent URL instead of about:srcdoc
 gtag('config', 'G-7SJTF762GX', {
     'cookie_domain': 'auto',
-    'page_location': window.parent.location.href, // <--- THE GA4 FIX
-    'debug_mode': true // Keep this ON for DebugView
+    'page_location': window.parent.location.href,
+    'debug_mode': true
 });
 
-// Report ready to Streamlit
+// Streamlit handshake (initial)
 window.parent.postMessage({ type: "streamlit:componentReady" }, "*");
 </script>
 
@@ -33,5 +33,22 @@ html, body {
 </style>
 
 </head>
-<body></body>
+<body>
+
+<!-- ⭐ KEEP-ALIVE HACK ⭐ -->
+<script>
+// Continually ping Streamlit to keep the iframe alive longer
+setInterval(() => {
+    try {
+        window.parent.postMessage(
+            { type: "streamlit:renderEvent" },
+            "*"
+        );
+    } catch (err) {
+        console.error("Keep-alive ping failed:", err);
+    }
+}, 500); // Ping every 500 ms
+</script>
+
+</body>
 </html>
