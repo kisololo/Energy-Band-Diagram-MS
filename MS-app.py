@@ -251,6 +251,7 @@ with left:
             <ul style='font-family:Arial; font-size:12px; line-height:1.2;'>
                 <li>Image-force barrier lowering</li>
                 <li>Fermi-level pinning</li>
+                <li>Metal work function < Semiconductor electron affinity</li>
                 <li>Deep levels / traps / interface states</li>
                 <li>Temperature-dependent:
                     <ul>
