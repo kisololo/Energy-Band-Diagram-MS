@@ -3,18 +3,30 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 
-hide_ga_iframe = """
+hide_streamlit_loader = """
 <style>
-iframe[src*="ga_inject"] {
+/* Hide Streamlit’s top loading overlay and progress bar */
+div[data-testid="stBlock"] > div[style*="position: absolute"] {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;
     width: 0 !important;
     opacity: 0 !important;
 }
+
+/* Hide ANY initial loading container */
+div[data-testid="stAppViewContainer"] div[style*="top: 0px"] {
+    display: none !important;
+}
+
+/* Hide mysterious top padding / animation container */
+div[data-testid="stDecoration"] {
+    display: none !important;
+}
 </style>
 """
-st.markdown(hide_ga_iframe, unsafe_allow_html=True)
+st.markdown(hide_streamlit_loader, unsafe_allow_html=True)
+
 
 # Hide the yellow Streamlit component warning box
 hide_warning = """
@@ -377,6 +389,7 @@ If you use this app for teaching or research, please cite:<br>
 
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
