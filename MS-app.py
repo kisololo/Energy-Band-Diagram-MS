@@ -23,24 +23,30 @@ st.set_page_config(
 components.html(
     """
     <script>
-      const s1 = document.createElement('script');
-      s1.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
-      s1.async = true;
-      document.head.appendChild(s1);
+      // Delay GA injection until Streamlit front-end loads
+      window.addEventListener('DOMContentLoaded', (event) => {
 
-      const s2 = document.createElement('script');
-      s2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-7SJTF762GX');
-      `;
-      document.head.appendChild(s2);
+          const s1 = document.createElement('script');
+          s1.src = "https://www.googletagmanager.com/gtag/js?id=G-7SJTF762GX";
+          s1.async = true;
+          document.head.appendChild(s1);
+
+          const s2 = document.createElement('script');
+          s2.innerHTML = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-7SJTF762GX');
+          `;
+          document.head.appendChild(s2);
+
+      });
     </script>
     """,
     height=0,
     width=0
 )
+
 
 
 # ---------------------------------------------------------------------
