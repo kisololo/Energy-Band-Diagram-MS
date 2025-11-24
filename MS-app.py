@@ -23,7 +23,7 @@ ga_component.inject()
 # GLOBAL PLOT STYLE
 # ---------------------------------------------------------------------
 plt.rcParams["font.family"] = "Arial"
-plt.rcParams["figure.figsize"] = (6, 3)
+plt.rcParams["figure.figsize"] = (6, 3.5)
 plt.rcParams["axes.linewidth"] = 1.8
 plt.rcParams["font.size"] = 11
 plt.rcParams["lines.linewidth"] = 2.4
@@ -127,7 +127,7 @@ def compute_schottky(Eg, chi, phi_m, Nd_cm3, eps_r, Nc_cm3, Vapp, T, xmin, xmax)
 # st.title("Schottky Contact Energy Band Diagram")
 st.markdown("""
     <style>
-        .block-container { padding-top: 1.2rem; }
+        .block-container { padding-top: 0.25rem; }
     </style>
 """, unsafe_allow_html=True)
 
