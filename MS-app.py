@@ -188,7 +188,7 @@ with left:
             value=float(materials[mat]["Nc"]),
             format="%.2e"
         )
-        Nd_scaled = st.slider("Nd (×1e16 cm⁻³)", 0.1, 100.0, 1.0)
+        Nd_scaled = st.slider("Nd (×1e16 cm⁻³)", 0.1, 1000.0, 1.0)
         Nd = Nd_scaled * 1e16
 
     # ---- Tab 3: Metal ----
